@@ -1,16 +1,12 @@
 import React from "react";
+import intialData from "./components/intialData";
 import CreateTodo from "./components/creatTodo";
 import Todo from "./components/Todo";
+
 import "./App.css";
 
 class App extends React.Component {
-  state = {
-    newTask: "",
-    todos: [
-      { id: 1, title: "learn angluer" },
-      { id: 1, title: "upload  app" },
-    ],
-  };
+  state = intialData;
   completeTasks = (index) => {
     const todos = [...this.state.todos];
     todos.splice(index, 1);
@@ -44,17 +40,25 @@ class App extends React.Component {
           addTodo={this.addTodo}
         />
         <div className="container">
-          <div className="status" id="AddValue">
+          <div
+            className="status"
+            id="AddValue"
+            onDragOver={(e) => e.preventDefault}
+          >
             <h2>No status</h2>
             {this.state.todos.map((todo, index) => (
               <Todo
                 todo={todo}
                 key={index}
+                draggable="true"
                 completeTasks={() => {
                   this.completeTasks(index);
                 }}
               />
             ))}
+          </div>
+          <div className="status" onDragOver={(e) => e.preventDefault}>
+            <h2>In progress</h2>
           </div>
         </div>
       </div>

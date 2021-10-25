@@ -10,14 +10,14 @@ body {
 .container {
   display: flex;
   height: 80vh;
-  width: 1000px;
+  width: 1080px;
 }
 
 .status:nth-child(even) {
   background-color: #e9e9e96b;
 }
 .status {
-  width: 25%;
+  width: 50%;
   background-color: #f3f3f3;
   position: relative;
   padding: 60px 1rem 0.5rem;
