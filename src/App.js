@@ -2,11 +2,15 @@ import React from "react";
 import intialData from "./components/intialData";
 import CreateTodo from "./components/creatTodo";
 import Todo from "./components/Todo";
-
+import Status from "./components/status";
 import "./App.css";
 
 class App extends React.Component {
   state = intialData;
+  constructor(props) {
+    super(props);
+    this.state = intialData;
+  }
   completeTasks = (index) => {
     const todos = [...this.state.todos];
     todos.splice(index, 1);
@@ -20,15 +24,20 @@ class App extends React.Component {
     });
   };
 
-  addTodo = () => {
+  addTodo = (e) => {
     const todos = [...this.state.todos];
-    todos.push({
-      title: this.state.newTask,
-    });
-    this.setState({
-      todos,
-      newTask: "",
-    });
+    if (this.state.newTask !== " ") {
+      todos.push({
+        title: this.state.newTask,
+      });
+      this.setState({
+        todos,
+        newTask: " ",
+      });
+    } else {
+    }
+
+    console.log(this.state.newTask === " ");
   };
 
   render() {
@@ -40,11 +49,7 @@ class App extends React.Component {
           addTodo={this.addTodo}
         />
         <div className="container">
-          <div
-            className="status"
-            id="AddValue"
-            onDragOver={(e) => e.preventDefault}
-          >
+          <Status>
             <h2>No status</h2>
             {this.state.todos.map((todo, index) => (
               <Todo
@@ -54,12 +59,18 @@ class App extends React.Component {
                 completeTasks={() => {
                   this.completeTasks(index);
                 }}
+                dragEnd={() => {
+                  this.dragEnd();
+                }}
+                dragStart={() => {
+                  this.dragStart();
+                }}
               />
             ))}
-          </div>
-          <div className="status" onDragOver={(e) => e.preventDefault}>
-            <h2>In progress</h2>
-          </div>
+          </Status>
+          <Status dragdrop={this.dragdrop}>
+            <h2> In progress</h2>
+          </Status>
         </div>
       </div>
     );
